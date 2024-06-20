@@ -6,4 +6,4 @@ class URL(Base):
     __tablename__ = "urls"
     id = Column(Integer, primary_key=True)
     original_url = Column(String)
-    short_url = Column(String, unique=True)
+    short_url_id = Column(String, unique=True)

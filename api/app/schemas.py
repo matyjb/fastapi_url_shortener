@@ -11,7 +11,7 @@ class URLCreate(URLBase):
 
 class URL(URLBase):
     id: int
-    short_url: str
+    short_url_id: str
 
     class Config:
         from_attributes = True
