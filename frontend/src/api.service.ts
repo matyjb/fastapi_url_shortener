@@ -1,23 +1,19 @@
-const API_URL = import.meta.env.VITE_API_URL;
+import { API } from "./api";
 
 function createShortUrl(originalUrl: string): Promise<string | void> {
-  return fetch(`${API_URL}/create`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      original_url: originalUrl
+  return API.createShortUrl(originalUrl)
+    .then(data => {
+      if (!data) {
+        throw new Error('Could not create short url')
+      }
+      return data;
     })
-  })
-    .then(res => res.json())
     .then(data => `${location.origin}/${data.short_url_id}`)
     .catch(err => console.log(err))
 }
 
-function getUrl(shortUrlId: string): Promise<string> {
-  return fetch(`${API_URL}/${shortUrlId}`)
-    .then(res => res.json())
+function getUrl(shortUrlId: string): Promise<string | void> {
+  return API.getUrl(shortUrlId)
     .then(data => data.original_url)
     .catch(err => console.log(err))
 }

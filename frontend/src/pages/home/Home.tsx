@@ -20,6 +20,7 @@ const Home: FunctionComponent<HomeProps> = () => {
         setLoading(false);
         if (shortUrl) {
           setShortUrl(shortUrl);
+          setError(null);
         }
       })
       .catch((err) => {
