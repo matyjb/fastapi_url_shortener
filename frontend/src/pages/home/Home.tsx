@@ -32,11 +32,10 @@ const Home: FunctionComponent<HomeProps> = () => {
   return (
     <div className="text-center text-3xl pt-24 pb-6 h-6 mx-auto max-w-xl grid gap-4 grid-cols-1">
       <h2 className="text-3xl m-6">Just make it short</h2>
-      {/* text box */}
-      <div className="flex justify-center gap-4">
+      <div className="flex flex-wrap justify-center gap-4">
         <Input
           className={"input"}
-          placeholder="Enter URL"
+          placeholder="Enter your loooooong url"
           value={url}
           onChange={(e) => setUrl(e.target.value)}
         />
@@ -46,9 +45,9 @@ const Home: FunctionComponent<HomeProps> = () => {
       </div>
 
       {shortUrl && (
-        <div className="flex justify-center gap-4">
-          <span className="flex items-center no-underline text-2xl">
-            Short URL: {shortUrl}
+        <div className="justify-center gap-4 flex-wrap flex">
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-500 to-red-500">
+            {shortUrl}
           </span>
           <a
             className="social p-2"

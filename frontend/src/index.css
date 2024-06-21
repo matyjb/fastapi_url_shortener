@@ -10,7 +10,7 @@ html {
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 body {
-  @apply h-full;
+  @apply h-full bg-slate-900;
 }
 #root {
   @apply h-full;

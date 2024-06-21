@@ -3,20 +3,20 @@
 }
 
 .social {
-  @apply inline-block text-blue-300 no-underline 
-    hover:text-purple-500 text-center h-10 p-2 
+  @apply inline-block text-indigo-400 no-underline 
+    hover:text-pink-500 text-center h-10 p-2 
     md:h-auto md:p-3 transform hover:scale-125 
     duration-300 ease-in-out;
 }
 
 .logo-main {
-  @apply flex items-center text-blue-400 
+  @apply flex items-center text-indigo-400
     no-underline hover:no-underline font-bold 
     text-2xl lg:text-4xl;
 
   span {
     @apply bg-clip-text text-transparent 
-      bg-gradient-to-r from-blue-400 via-purple-500 
+      bg-gradient-to-r from-indigo-400 via-purple-500 
     to-red-500;
   }
 }
