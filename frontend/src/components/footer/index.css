@@ -1,0 +1,9 @@
+#footer {
+  @apply w-full pt-16 pb-6 text-sm text-center 
+    md:text-left;
+}
+
+#footer-copyright {
+  @apply text-gray-500 no-underline 
+    hover:no-underline;
+}

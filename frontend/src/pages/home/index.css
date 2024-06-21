@@ -1,0 +1,17 @@
+.b-primary {
+  @apply text-2xl ease-in duration-300 h-full 
+		inline-flex items-center gap-2 rounded-md 
+		bg-blue-700 py-1.5 px-3 font-semibold text-white 
+		shadow-inner shadow-black/10 focus:outline-none 
+		hover:bg-gradient-to-r hover:from-blue-700 
+		hover:via-purple-600 hover:to-pink-500 
+		open:bg-gray-700 focus:outline-1 
+		focus:outline-white whitespace-nowrap;
+}
+
+.input {
+  @apply text-2xl h-full block w-full 
+		rounded-lg border-none bg-black/5 py-1.5 px-3 
+		focus:outline-none focus:outline-2 
+		focus:-outline-offset-2 focus:outline-blue-700;
+}
