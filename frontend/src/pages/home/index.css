@@ -1,0 +1,18 @@
+.b-primary {
+  @apply text-2xl ease-in-out duration-300 
+		inline-flex items-center gap-2 rounded-md 
+		bg-indigo-400 py-1.5 px-3 font-semibold text-white 
+		shadow-inner shadow-black/10 focus:outline-none 
+		hover:bg-pink-500
+		active:opacity-50
+		open:bg-gray-700 focus:outline-0
+		focus:outline-white whitespace-nowrap;
+}
+
+.input {
+  @apply text-2xl block flex-grow 
+		rounded-lg border-none bg-slate-800 hover:bg-slate-700 py-1.5 px-3 
+		focus:outline-none focus:outline-2 
+		focus:-outline-offset-2 focus:outline-indigo-400 min-w-48
+		duration-300 ease-in-out;
+}
