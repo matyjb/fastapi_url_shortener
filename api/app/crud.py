@@ -4,19 +4,24 @@ from sqlalchemy.orm import Session
 from . import models
 
 
-def generate_short_url(length: int = 6):
+def generate_short_url_id(length: int = 6):
     characters = string.ascii_letters + string.digits
     return "".join(random.choice(characters) for _ in range(length))
 
 
 def shorten_url(db: Session, original_url: str):
-    short_url_id = generate_short_url()
+    short_url_id = generate_short_url_id()
+    triesLimit = 10
     while (
         db.query(models.URL).filter(models.URL.short_url_id == short_url_id).first()
-        != None
+        != None and triesLimit > 0
     ):
         # try again
-        short_url_id = generate_short_url()
+        short_url_id = generate_short_url_id()
+        triesLimit -= 1
+
+    if triesLimit == 0:
+        raise Exception("Could not generate short url id")
 
     db_url = models.URL(original_url=original_url, short_url_id=short_url_id)
 

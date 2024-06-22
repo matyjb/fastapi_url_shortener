@@ -1,3 +1,4 @@
+import re
 from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
@@ -32,11 +33,25 @@ def get_db():
         yield db
     finally:
         db.close()
+        
+urlRe = re.compile(r"https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)")
 
 
 @app.post("/create", response_model=schemas.URL)
-async def shorten_url(original_url: schemas.URLCreate, db: Session = Depends(get_db)):
-    db_url = crud.shorten_url(db, original_url.original_url)
+async def shorten_url(body: schemas.URLCreate, db: Session = Depends(get_db)):
+    # add https:// if original_url lacks https:// or http://
+    # check if original_url is a valid url
+    # if it is not a valid url, raise an exception
+    
+    if not body.original_url.startswith("https://") and not body.original_url.startswith("http://"):
+        body.original_url = "https://" + body.original_url
+        
+    if urlRe.match(body.original_url) == None:
+        raise HTTPException(400, "Invalid url")
+    try:
+        db_url = crud.shorten_url(db, body.original_url)
+    except Exception as e:
+        raise HTTPException(500, str(e))
     return db_url
 
 
