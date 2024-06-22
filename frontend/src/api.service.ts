@@ -1,4 +1,5 @@
 import { API } from "./api";
+import { T_URL } from "./types";
 
 function createShortUrl(originalUrl: string): Promise<string | void> {
   return API.createShortUrl(originalUrl)
@@ -12,9 +13,9 @@ function createShortUrl(originalUrl: string): Promise<string | void> {
     .catch(err => console.log(err))
 }
 
-function getUrl(shortUrlId: string): Promise<string | void> {
+function getUrl(shortUrlId: string): Promise<T_URL | void> {
   return API.getUrl(shortUrlId)
-    .then(data => data.original_url)
+    .then(data => data)
     .catch(err => console.log(err))
 }
 
