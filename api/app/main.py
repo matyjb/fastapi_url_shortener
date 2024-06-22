@@ -60,4 +60,8 @@ async def get_url(id: str, db: Session = Depends(get_db)):
     db_url = crud.get_url(db, id)
     if db_url is None:
         raise HTTPException(404, "Url not found")
+    else:
+        db_url.clicks += 1
+        db.commit()
+        db.refresh(db_url)
     return db_url

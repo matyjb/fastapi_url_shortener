@@ -15,8 +15,7 @@ const GetUrlInfoSection: FunctionComponent<GetUrlInfoSectionProps> = () => {
     if (loading) return;
 
     setLoading(!loading);
-    // getUrl(url)
-    getUrl("xw0WTL")
+    getUrl(url)
       .then((urlInfo) => {
         setLoading(false);
         if (urlInfo) {

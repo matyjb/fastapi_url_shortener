@@ -1,3 +1,4 @@
+from datetime import datetime
 from pydantic import BaseModel
 
 
@@ -12,6 +13,8 @@ class URLCreate(URLBase):
 class URL(URLBase):
     id: int
     short_url_id: str
+    clicks: int
+    expiration_date: datetime
 
     class Config:
         from_attributes = True
