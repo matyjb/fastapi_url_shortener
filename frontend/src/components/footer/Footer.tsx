@@ -7,7 +7,7 @@ const Footer: FunctionComponent<FooterProps> = () => {
   return (
     <div id="footer">
       <a id="footer-copyright" href="#">
-        &copy; FastAPI URL Shortener 2024
+        &copy; LinkLite 2024
       </a>
     </div>
   );

@@ -8,7 +8,7 @@ const Header: FunctionComponent<HeaderProps> = () => {
     <div id="header">
       <div className="w-full flex items-center justify-between">
         <a className="logo-main" href="#">
-          <span>FastAPI URL shortener</span>
+          <span>LinkLite</span>
         </a>
 
         <div className="flex w-1/2 justify-end content-center">
