@@ -4,15 +4,15 @@
 @tailwind utilities;
 
 html {
-  @apply h-full;
+  @apply min-h-full;
   font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 body {
-  @apply h-full bg-slate-900;
+  @apply min-h-full bg-slate-900;
 }
 #root {
-  @apply h-full;
+  @apply min-h-full;
   padding: 0px;
 }

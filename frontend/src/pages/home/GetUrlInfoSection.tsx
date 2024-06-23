@@ -3,6 +3,7 @@ import { getUrl } from "../../api.service";
 import { Button, Input } from "@headlessui/react";
 import { T_ErrorBody, T_URL } from "../../types";
 import { AxiosError } from "axios";
+import { CalendarIcon, CursorArrowRaysIcon, LinkIcon } from "@heroicons/react/16/solid";
 
 interface GetUrlInfoSectionProps {}
 
@@ -45,28 +46,36 @@ const GetUrlInfoSection: FunctionComponent<GetUrlInfoSectionProps> = () => {
         </Button>
       </div>
 
-      <div
-        className="justify-center grid grid-cols-2 gap-4 flex-wrap data-[visible=false]:scale-y-0 data-[visible=true]:scale-y-1 transform ease-in-out duration-300"
-        data-visible={urlInfo ? true : false}
+      {urlInfo && <div
+        className="justify-center grid grid-cols-1 gap-4 flex-wrap"
       >
-        <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-500 to-red-500">
-          Short id:
-        </span>
-        <span>{urlInfo?.short_url_id}</span>
-        <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-500 to-red-500">
-          Original Url:
-        </span>
-        <span>{urlInfo?.original_url}</span>
-      </div>
+        <div className="w-fit flex flex-wrap items-center gap-4 justify-center">
+          <CursorArrowRaysIcon className="w-10 h-10" />
+          <div className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-500 to-red-500">
+            {urlInfo?.clicks}
+          </div>
+        </div>
+        <div className="w-fit flex flex-wrap items-center gap-4 justify-center">
+          <LinkIcon className="w-10 h-10" />
+          <div className="overflow-ellipsis bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-500 to-red-500">
+            {urlInfo?.original_url}
+          </div>
+        </div>
+        <div className="w-fit flex flex-wrap items-center gap-4 justify-center">
+          <CalendarIcon className="w-10 h-10" />
+          <div className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-500 to-red-500">
+            {urlInfo && (new Date(urlInfo?.expiration_date)).toLocaleString()}
+          </div>
+        </div>
+      </div>}
 
-      <div
-        className="justify-center grid grid-cols-2 gap-4 flex-wrap data-[visible=false]:scale-y-0 data-[visible=true]:scale-y-1 transform ease-in-out duration-300"
-        data-visible={error ? true : false}
+      {error && <div
+        className="justify-center"
       >
         <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-500 to-red-500">
           Error: {error}
         </span>
-      </div>
+      </div>}
     </div>
   );
 };
