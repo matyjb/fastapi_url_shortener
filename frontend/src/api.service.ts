@@ -1,22 +1,20 @@
-import { API } from "./api";
+import axios from "axios";
 import { T_URL } from "./types";
 
-function createShortUrl(originalUrl: string): Promise<string | void> {
-  return API.createShortUrl(originalUrl)
-    .then(data => {
-      if (!data) {
-        throw new Error('Could not create short url')
-      }
-      return data;
-    })
-    .then(data => `${location.origin}/${data.short_url_id}`)
-    .catch(err => console.log(err))
+const API_URL = import.meta.env.VITE_API_URL;
+
+function createShortUrl(originalUrl: string) {
+  return axios.post<T_URL>(`${API_URL}/create`, {
+    original_url: originalUrl
+  })
 }
 
-function getUrl(shortUrlId: string): Promise<T_URL | void> {
-  return API.getUrl(shortUrlId)
-    .then(data => data)
-    .catch(err => console.log(err))
+function getUrl(shortUrlId: string) {
+  return axios.get<T_URL>(`${API_URL}/${shortUrlId}`)
 }
 
-export { createShortUrl, getUrl }
+function clickUrl(shortUrlId: string) {
+  return axios.get<T_URL>(`${API_URL}/${shortUrlId}/click`)
+}
+
+export { createShortUrl, getUrl, clickUrl }

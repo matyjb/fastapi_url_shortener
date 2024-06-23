@@ -4,4 +4,8 @@ type T_URL = {
     id: number,
 }
 
-export type { T_URL }
+type T_ErrorBody = {
+    detail: string
+}
+
+export type { T_URL, T_ErrorBody }

@@ -1,6 +1,8 @@
 import { FunctionComponent, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getUrl } from "../../api.service";
+import { clickUrl } from "../../api.service";
+import { AxiosError } from "axios";
+import { T_ErrorBody } from "../../types";
 
 interface RedirectToUrlProps {}
 
@@ -11,16 +13,14 @@ const RedirectToUrl: FunctionComponent<RedirectToUrlProps> = () => {
   useEffect(() => {
     if (!params.shortLinkId) return;
 
-    getUrl(params.shortLinkId).then((url) => {
-      if (url && url.original_url) {
-        window.location.replace(url.original_url);
-      } else {
-        setError("Url does not exist");
-      }
-    });
+    clickUrl(params.shortLinkId)
+      .then((res) => {
+        window.location.replace(res.data.original_url);
+      })
+      .catch((err: AxiosError<T_ErrorBody>) => {
+        setError(err.response?.data.detail ?? err.message);
+      });
   }, [params.shortLinkId]);
-  // make request to api and redirect to provided original url
-  // if it doesnt exist, display 404 error
 
   return (
     <div className="text-center text-2xl m-6">

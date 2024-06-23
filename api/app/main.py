@@ -40,7 +40,7 @@ urlRe = re.compile(
 )
 
 
-@app.post("/create", response_model=schemas.URL)
+@app.post("/api/v1/create", response_model=schemas.URL)
 async def shorten_url(body: schemas.URLCreate, db: Session = Depends(get_db)):
     # add https:// if original_url lacks https:// or http://
     # check if original_url is a valid url
@@ -60,7 +60,7 @@ async def shorten_url(body: schemas.URLCreate, db: Session = Depends(get_db)):
     return db_url
 
 
-@app.get("/{id}", response_model=schemas.URL)
+@app.get("/api/v1/{id}", response_model=schemas.URL)
 async def get_url(id: str, db: Session = Depends(get_db)):
     db_url = crud.get_url(db, id)
     if db_url is None:
@@ -69,7 +69,7 @@ async def get_url(id: str, db: Session = Depends(get_db)):
     return db_url
 
 
-@app.get("/{id}/click", response_model=schemas.URL)
+@app.get("/api/v1/{id}/click", response_model=schemas.URL)
 async def increment_clicks(id: str, db: Session = Depends(get_db)):
     db_url = crud.get_url(db, id)
     if db_url is None:

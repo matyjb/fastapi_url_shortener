@@ -1,6 +1,8 @@
 import { FunctionComponent, useState } from "react";
 import { createShortUrl } from "../../api.service";
 import { Button, Input } from "@headlessui/react";
+import { T_ErrorBody } from "../../types";
+import { AxiosError } from "axios";
 
 interface CreateShortUrlSectionProps {}
 
@@ -8,25 +10,25 @@ const CreateShortUrlSection: FunctionComponent<
   CreateShortUrlSectionProps
 > = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<any>();
-  const [url, setUrl] = useState<string>("");
-  const [shortUrl, setShortUrl] = useState<string>("");
+  const [error, setError] = useState<string>();
+  const [url, setUrl] = useState<string>();
+  const [shortUrl, setShortUrl] = useState<string>();
 
   const handleClick = () => {
-    if (loading) return;
+    if (loading || !url) return;
 
     setLoading(!loading);
     createShortUrl(url)
-      .then((shortUrl) => {
-        setLoading(false);
-        if (shortUrl) {
-          setShortUrl(shortUrl);
-          setError(null);
-        }
+      .then((res) => {
+        setShortUrl(`${location.origin}/${res.data.short_url_id}`);
+        setError(undefined);
+        })
+        .catch((err: AxiosError<T_ErrorBody>) => {
+        setShortUrl(undefined);
+        setError(err.response?.data.detail ?? err.message);
       })
-      .catch((err) => {
+      .finally(() => {
         setLoading(false);
-        setError(err);
       });
   };
 
@@ -73,7 +75,7 @@ const CreateShortUrlSection: FunctionComponent<
         </div>
       )}
 
-      {error && <span className="text-red-500">{error.message}</span>}
+      {error && <span className="text-red-500">{error}</span>}
     </div>
   );
 };
