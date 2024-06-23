@@ -2,6 +2,7 @@ import re
 from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
+import uvicorn
 
 from app import models
 from app import schemas
@@ -12,10 +13,15 @@ models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
+isDebug = uvicorn.config.Config(app).reload
+
 origins = [
     "http://localhost",
     "http://localhost:8080",
     "http://localhost:5173",
+] if isDebug else [
+    "http://127.0.0.1",
+    "http://127.0.0.1:80"
 ]
 
 app.add_middleware(
