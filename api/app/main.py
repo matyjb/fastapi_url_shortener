@@ -33,8 +33,11 @@ def get_db():
         yield db
     finally:
         db.close()
-        
-urlRe = re.compile(r"https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)")
+
+
+urlRe = re.compile(
+    r"https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)"
+)
 
 
 @app.post("/create", response_model=schemas.URL)
@@ -42,10 +45,12 @@ async def shorten_url(body: schemas.URLCreate, db: Session = Depends(get_db)):
     # add https:// if original_url lacks https:// or http://
     # check if original_url is a valid url
     # if it is not a valid url, raise an exception
-    
-    if not body.original_url.startswith("https://") and not body.original_url.startswith("http://"):
+
+    if not body.original_url.startswith(
+        "https://"
+    ) and not body.original_url.startswith("http://"):
         body.original_url = "https://" + body.original_url
-        
+
     if urlRe.match(body.original_url) == None:
         raise HTTPException(400, "Invalid url")
     try:
@@ -60,8 +65,17 @@ async def get_url(id: str, db: Session = Depends(get_db)):
     db_url = crud.get_url(db, id)
     if db_url is None:
         raise HTTPException(404, "Url not found")
-    else:
-        db_url.clicks += 1
-        db.commit()
-        db.refresh(db_url)
+
+    return db_url
+
+
+@app.get("/{id}/click", response_model=schemas.URL)
+async def increment_clicks(id: str, db: Session = Depends(get_db)):
+    db_url = crud.get_url(db, id)
+    if db_url is None:
+        raise HTTPException(404, "Url not found")
+
+    db_url.clicks += 1
+    db.commit()
+    db.refresh(db_url)
     return db_url

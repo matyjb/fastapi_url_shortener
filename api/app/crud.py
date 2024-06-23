@@ -34,11 +34,11 @@ def shorten_url(db: Session, original_url: str):
 
     if triesLimit == 0:
         raise Exception("Could not generate short url id")
-    
+
     if existsButExpired:
         db.delete(url)
         db.commit()
-    
+
     # create new url
     db_new_url = models.URL(original_url=original_url, short_url_id=short_url_id)
     db.add(db_new_url)
