@@ -1,20 +1,31 @@
-version: '3.8'
+version: "3.8"
 services:
-  backend:
+  backend_db:
+    build:
+      context: ./postgres/
+      dockerfile: ./Dockerfile
+    environment:
+      POSTGRES_PASSWORD: password_superuser
+    ports:
+      - "127.0.0.1:5432:5432"
+    expose:
+      - 5432
+
+  backend_api:
     build:
       context: ./api/
       dockerfile: ./Dockerfile
-    restart: always
     ports:
       - "127.0.0.1:8000:8000"
     expose:
       - 8000
+    depends_on:
+      - backend_db
 
   frontend:
     build:
       context: ./frontend/
       dockerfile: ./Dockerfile
-    restart: always
     ports:
       - "127.0.0.1:80:80"
     expose:
